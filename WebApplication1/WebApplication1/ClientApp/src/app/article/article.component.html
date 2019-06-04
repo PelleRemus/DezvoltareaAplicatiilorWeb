@@ -1,0 +1,55 @@
+<div class="container" *ngIf="article">
+    <div class="top">
+        <h2>{{article.title}}</h2>
+        <h6>{{article.date | date}}</h6>
+    </div>
+    <hr />
+    <p>{{article.content}}</p>
+    <div class="bottom" *ngIf="token">
+        <button routerLink="/edit-article/{{article.id}}">Edit Article</button>
+        <button (click)="deleteArticle()">Delete Article</button>
+    </div>
+    <hr />
+    <div class="bottom">
+        <h5 *ngIf="article.rating">{{article.rating | number:'1.0-1'}}/10</h5>
+        <h5 *ngIf="!article.rating">No ratings</h5>
+        <button (click)="commentFormToggler()">Add comment</button>
+        <h5>Views: {{article.views}}</h5>
+    </div>
+</div>
+
+<div class="container to-expand" *ngIf="wantsToAddComment">
+    <div class="form-group">
+        <label>Username</label>
+        <input type="text" class="form-control" [(ngModel)]="comment.user" name="user" #user="ngModel" required>
+        <p class="error" *ngIf="nameNotValid">Please insert your name.</p>
+    </div>
+
+    <div class="form-group">
+        <label>Rate</label>
+        <input type="number" class="form-control" [(ngModel)]="comment.rate" name="rate" #rate="ngModel">
+        <p class="error" *ngIf="rateNotValid">Rate has to be between 1 and 10.</p>
+    </div>
+
+    <div class="form-group">
+        <label>Content</label>
+        <textarea class="form-control" rows="5" [(ngModel)]="comment.content" name="content" #content="ngModel"></textarea>
+        <p class="error" *ngIf="contentNotValid">Write your comment here.</p>
+    </div>
+
+    <div class="form-group">
+        <button class="btn-block" (click)="addComment()">Comment</button>
+    </div>
+</div>
+
+<div *ngIf="comments">
+    <div class="container" *ngFor="let comment of comments">
+        <div class="top">
+            <h5>{{comment.user}}</h5>
+            <h5 *ngIf="comment.rate">Rate: {{comment.rate}}</h5>
+            <h6>{{comment.date | date}}</h6>
+        </div>
+        <p>{{comment.content}}</p>
+        <button (click)="deleteComment(comment)" *ngIf="token">Delete Comment</button>
+    </div>
+</div>

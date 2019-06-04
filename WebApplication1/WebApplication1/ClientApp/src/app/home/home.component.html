@@ -1,0 +1,80 @@
+<div class="container">
+    <h2>Home</h2>
+    <div class="slider-container">
+        <h4>Popular Articles</h4>
+        <div class="slider">
+            <button class="slider-button left" *ngIf="index[0]!=0" (click)="prev(0)">
+                <
+            </button>
+
+            <div class="slide-container">
+                <div class="slide" [style.left]="(-index[0] * width) + 'px'">
+                    <div class="article" *ngFor="let article of popular" routerLink="/article/{{article.id}}">
+                        <h3>{{article.title}}</h3>
+                        <p>{{article.content}}</p>
+                        <div class="fade-away"></div>
+                    </div>
+                    <div *ngIf="!popular" style="color: white">
+                        Loading...
+                    </div>
+                </div>
+            </div>
+
+            <button class="slider-button right" *ngIf="index[0]!=2" (click)="next(0)">
+                >
+            </button>
+        </div>
+    </div>
+
+    <div class="slider-container">
+        <h4>Best Rated Articles</h4>
+        <div class="slider">
+            <button class="slider-button left" *ngIf="index[1]!=0" (click)="prev(1)">
+                <
+            </button>
+
+            <div class="slide-container">
+                <div class="slide" [style.left]="(-index[1] * width) + 'px'">
+                    <div class="article" *ngFor="let article of bestRated" routerLink="/article/{{article.id}}">
+                        <h3>{{article.title}}</h3>
+                        <p>{{article.content}}</p>
+                        <div class="fade-away"></div>
+                    </div>
+                    <div *ngIf="!bestRated" style="color: white">
+                        Loading...
+                    </div>
+                </div>
+            </div>
+
+            <button class="slider-button right" *ngIf="index[1]!=2" (click)="next(1)">
+                >
+            </button>
+        </div>
+    </div>
+
+    <div class="slider-container">
+        <h4>Debated Articles</h4>
+        <div class="slider">
+            <button class="slider-button left" *ngIf="index[2]!=0" (click)="prev(2)">
+                <
+            </button>
+
+            <div class="slide-container">
+                <div class="slide" [style.left]="(-index[2] * width) + 'px'">
+                    <div class="article" *ngFor="let article of debated" routerLink="/article/{{article.id}}">
+                        <h3>{{article.title}}</h3>
+                        <p>{{article.content}}</p>
+                        <div class="fade-away"></div>
+                    </div>
+                    <div *ngIf="!debated" style="color: white">
+                        Loading...
+                    </div>
+                </div>
+            </div>
+
+            <button class="slider-button right" *ngIf="index[2]!=2" (click)="next(2)">
+                >
+            </button>
+        </div>
+    </div>
+</div>

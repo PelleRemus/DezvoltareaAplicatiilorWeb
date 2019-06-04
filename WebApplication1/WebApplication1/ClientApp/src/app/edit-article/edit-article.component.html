@@ -1,0 +1,37 @@
+<div class="row" *ngIf="article">
+    <div class="card-block">
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" class="form-control" [(ngModel)]="article.title" name="title" #title="ngModel" required>
+            <p class="error" *ngIf="titleNotValid">Please insert a title.</p>
+        </div>
+
+        <div class="form-group">
+            <label>Difficulty</label>
+            <select class="form-control" [(ngModel)]="article.difficulty" name="difficulty" #difficulty="ngModel">
+                <option [value]="0">Easy</option>
+                <option [value]="1">Medium</option>
+                <option [value]="2">Hard</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Language</label>
+            <select class="form-control" [(ngModel)]="article.language" name="language" #language="ngModel">
+                <option [value]="0">C#</option>
+                <option [value]="1">HTML CSS</option>
+                <option [value]="2">JS TS</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Content</label>
+            <textarea class="form-control" rows="5" [(ngModel)]="article.content" name="content" #content="ngModel"></textarea>
+            <p class="error" *ngIf="contentNotValid">Write the article's content here.</p>
+        </div>
+
+        <div class="form-group">
+            <button class="btn-block" (click)="editArticle()">Edit Article</button>
+        </div>
+    </div>
+</div>

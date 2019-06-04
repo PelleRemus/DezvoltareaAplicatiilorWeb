@@ -1,0 +1,28 @@
+<div class="container">
+    <h2>Articles</h2>
+    <div class="search-container">
+        <div class="multi-item-container" *ngFor="let types of Types; let i = index">
+            <select #t (change)="changeType(i, t.value)">
+                <option *ngFor="let type of types" [value]="type">{{type}}</option>
+            </select>
+        </div>
+    </div>
+
+    <button class="btn-block" *ngIf="token" routerLink="/add-article">Add Article</button>
+
+    <div class="articles-list">
+        <div class="article" *ngFor="let article of sortedArticles" routerLink="/article/{{article.id}}">
+            <h3>{{article.title}}</h3>
+            <p>{{article.content}}</p>
+            <div class="fade-away"></div>
+        </div>
+
+        <div class="empty-list" *ngIf="sortedArticles && sortedArticles.length == 0">
+            There are no articles with these specifications.
+        </div>
+    </div>
+
+    <div *ngIf="!sortedArticles">
+        Loading...
+    </div>
+</div>
