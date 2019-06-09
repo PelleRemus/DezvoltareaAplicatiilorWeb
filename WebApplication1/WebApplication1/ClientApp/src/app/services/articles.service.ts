@@ -14,9 +14,13 @@ export class ArticlesService {
     getArticle(articleId: string) {
         return this.http.get<Article>(this.baseUrl + `api/Articles/GetArticle/${articleId}`);
     }
-
+    
     postArticle(article: Article) {
         return this.http.post<any>(this.baseUrl + `api/Articles/PostArticle`, article);
+    }
+
+    incrementViews(article: Article) {
+        return this.http.put<any>(this.baseUrl + `api/Articles/IncrementViews/${article.id}`, article);
     }
 
     putArticle(article: Article) {

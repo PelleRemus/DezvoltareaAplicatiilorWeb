@@ -67,6 +67,13 @@ namespace WebApplication1.Controllers
         }
         
         [AllowAnonymous]
+        [HttpPut("{articleId}")]
+        public void IncrementViews([FromRoute]Guid articleId)
+        {
+            context.Articles.FirstOrDefault(x => x.ID == articleId).Views++;
+            context.SaveChanges();
+        }
+
         [HttpPut]
         public void PutArticle([FromBody]Article article)
         {

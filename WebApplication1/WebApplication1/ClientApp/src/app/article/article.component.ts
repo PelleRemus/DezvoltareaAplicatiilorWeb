@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { ArticlesService } from '../services/articles.service';
 import { CommentsService } from '../services/comments.service';
-import { HttpRequestInterceptor } from '../services/http-request-interceptor';
 
 import { Article } from '../models/article';
 import { Comment } from '../models/comment';
@@ -30,31 +29,35 @@ export class ArticleComponent implements OnInit {
     constructor(
         private articlesService: ArticlesService,
         private commentsService: CommentsService,
-        private httpRequestInterceptor: HttpRequestInterceptor,
         private route: ActivatedRoute,
         private router: Router) {
 
-        this.token = httpRequestInterceptor.getToken();
+        this.token = JSON.parse(localStorage.getItem("token") as string);
     }
 
     ngOnInit() {
         this.articleId = this.route.snapshot.params['articleId'];
         this.articlesService.getArticle(this.articleId).subscribe(res => {
             this.article = res;
-            this.article.views++;
-            this.articlesService.putArticle(this.article).subscribe(res => { });
+            this.articlesService.incrementViews(this.article).subscribe(res => { });
 
             this.commentsService.getComments(this.articleId).subscribe(result => {
                 this.comments = result;
-                for (let comm of this.comments) {
-                    if (comm.rate) {
-                        this.sum += comm.rate;
-                        this.nr++;
-                    }
-                }
-                this.article.rating = this.sum / this.nr;
+                this.getRating();
             });
         });
+    }
+
+    getRating() {
+        this.sum = 0;
+        this.nr = 0;
+        for (let comm of this.comments) {
+            if (comm.rate) {
+                this.sum += comm.rate;
+                this.nr++;
+            }
+        }
+        this.article.rating = this.sum / this.nr;
     }
 
     deleteArticle() {
@@ -92,12 +95,14 @@ export class ArticleComponent implements OnInit {
             this.comments.push(this.comment);
             this.comment = new Comment();
             this.wantsToAddComment = false;
+            this.getRating();
         }
     }
 
     deleteComment(comment: Comment) {
         this.commentsService.deleteComment(comment.id).subscribe(res => {
             this.comments.splice(this.comments.indexOf(comment), 1);
+            this.getRating();
         });
     }
 }

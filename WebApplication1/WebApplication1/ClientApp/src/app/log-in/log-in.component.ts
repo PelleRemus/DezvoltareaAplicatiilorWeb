@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { HttpRequestInterceptor } from '../services/http-request-interceptor';
 import { LoginModel, Token } from '../shared/security.models';
 
 @Component({
@@ -16,10 +15,9 @@ export class LogInComponent {
     constructor(
         private httpClient: HttpClient,
         private router: Router,
-        private httpRequestInterceptor: HttpRequestInterceptor,
         @Inject('BASE_URL') private baseUrl: string) {
 
-        this.token = httpRequestInterceptor.getToken();
+        this.token = JSON.parse(localStorage.getItem("token") as string);
     }
 
     loginUser() {

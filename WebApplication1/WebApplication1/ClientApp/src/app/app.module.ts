@@ -52,7 +52,6 @@ import { HttpRequestInterceptor } from './services/http-request-interceptor';
   providers: [
       ArticlesService,
       CommentsService,
-      HttpRequestInterceptor,
       {
           provide: HTTP_INTERCEPTORS,
           useClass: HttpRequestInterceptor,

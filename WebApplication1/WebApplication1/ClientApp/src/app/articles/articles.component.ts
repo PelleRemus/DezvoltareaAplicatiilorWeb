@@ -1,7 +1,6 @@
 import { Component, AfterContentChecked } from '@angular/core';
 import { Article, difficulties, languages } from '../models/article';
 import { ArticlesService } from '../services/articles.service';
-import { HttpRequestInterceptor } from '../services/http-request-interceptor';
 import { Token } from '../shared/security.models';
 
 @Component({
@@ -20,9 +19,8 @@ export class ArticlesComponent implements AfterContentChecked {
     ];
     selectedTypes = ['Order by date(newest)', 'Difficulty: Any', 'Language: Any'];
 
-    constructor(private articlesService: ArticlesService,
-                private httpRequestInterceptor: HttpRequestInterceptor) {
-        this.token = httpRequestInterceptor.getToken();
+    constructor(private articlesService: ArticlesService) {
+        this.token = JSON.parse(localStorage.getItem("token") as string);
     }
 
     ngAfterContentChecked() {
